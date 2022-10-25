@@ -1,6 +1,7 @@
 from random import choice, sample
 
 def diccionario():
+
     cartas= {
         chr(0x1f0a1): 11,
         chr(0x1f0a2): 2,
@@ -16,10 +17,7 @@ def diccionario():
         chr(0x1f0ad): 10,
         chr(0x1f0ae): 10,
         }
-    for i in range(4):
-        cartas.update(cartas)
-    for carta in sorted(cartas.keys()):
-        print("la carta {} vale {}".format(carta, cartas[carta]))
+    
     lista_cartas=list(cartas)
     return lista_cartas, cartas
 
