@@ -33,47 +33,71 @@ def main_banca():
                                                           cartas_banca[1],
                                                           score_banca)
     return score_banca, frase                                               
-    
 
 
-def jugador_simple():
+def jugador():
     lista_cartas, cartas =diccionario()
     carta_jugador_1=choice(lista_cartas)
     score_jugador=cartas[carta_jugador_1]
     print("Su primera carta es {} con un valor de {}".format(carta_jugador_1, score_jugador))
     carta_jugador_2=choice(lista_cartas)
     score_jugador+=cartas[carta_jugador_2]
+    return score_jugador, carta_jugador_1, carta_jugador_2
+
+def victoria1():
+    score_banca, frase = main_banca()
+    score_jugador, carta_jugador_1, carta_jugador_2 = jugador()
+    if score_banca<score_jugador:
+            print("El jugador gana")
+    else:
+            print("La banca gana")
+    return frase
+
+def tercera_carta():
+    lista_cartas, cartas =diccionario()
+    score_jugador, carta_jugador_1, carta_jugador_2 = jugador()
+    carta_jugador_3=choice(lista_cartas)
+    score_jugador+=cartas[carta_jugador_3]
+    print("Sus cartas era {} {} {} y sumaban {}".format(carta_jugador_1,carta_jugador_2,carta_jugador_3, score_jugador))
+    return  score_jugador
+
+
+def Victoria2():
+    score_banca, frase = main_banca()
+    score_jugador= tercera_carta()
+    if score_banca<score_jugador:
+            print("El jugador gana")
+    else:
+            print("La banca gana")
+    return frase
+    
+
+
+
+
+
+def jugador_simple():
+    score_jugador, carta_jugador_1, carta_jugador_2 = jugador()
     score_banca, frase = main_banca()
     print("Comprobemos si hay posibilidad de seguir")
     if score_banca>=17:
         print("Sus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score_jugador))
         print(frase)
-        if score_banca<score_jugador:
-            print("El jugador gana")
-        else:
-            print("La banca gana")
+        frase=victoria1()
     else:
         respuesta=input("Existe posibilidad de seguir\n¿Desea plantarse?\n")
         if respuesta in SI:
             print("Sus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score_jugador))
             print(frase)
-            if score_banca<score_jugador:
-                print("El jugador gana")
-            else:
-                print("La banca gana")
+            frase=victoria1()
         else:
-            carta_jugador_3=choice(lista_cartas)
-            score_jugador+=cartas[carta_jugador_3]
-            score_banca, frase = main_banca()
-            print(["Sus cartas era {} {} {} y sumaban {}".format(carta_jugador_1,carta_jugador_2,carta_jugador_3, score_jugador)], frase)
+            score_jugador = tercera_carta()
             print(frase)
             if score_jugador > 21:
                 print("oh no!, parece que se ha pasado \nLa banca gana")
             else:
-                if score_banca<score_jugador:
-                    print("El jugador gana")
-                else:
-                    print("La banca gana")
+                frase=Victoria2()
+
 
 
 SI=["si", "S", "s", "Si", "verdadero", "Verdadero", "True", "1"]
@@ -93,7 +117,7 @@ def partida():
             return"hasta luego, {}".format(nombre)
             break
 
-print(partida())
+
 
 if __name__=="__main__":
     main()
