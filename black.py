@@ -79,7 +79,7 @@ def Victoria2():
 
 def jugador_simple():
     score_jugador, carta_jugador_1, carta_jugador_2, carta1_valor1 = jugador()
-    print(carta_jugador_1)
+    print(carta1_valor1)
     score_banca, frase = main_banca()
     print("Comprobemos si hay posibilidad de seguir")
     if score_banca>=17:
