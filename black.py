@@ -36,9 +36,10 @@ def main_banca():
 
 
 def jugador():
+    score_jugador=0
     lista_cartas, cartas =diccionario()
     carta_jugador_1=choice(lista_cartas)
-    score_jugador=cartas[carta_jugador_1]
+    score_jugador+=cartas[carta_jugador_1]
     carta_jugador_2=choice(lista_cartas)
     score_jugador+=cartas[carta_jugador_2]
     return score_jugador, carta_jugador_1, carta_jugador_2
