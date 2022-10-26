@@ -1,5 +1,6 @@
 from ast import main
 from random import choice, sample
+from traceback import FrameSummary
 
 def diccionario():
 
@@ -43,6 +44,7 @@ def jugador_simple():
     carta_jugador_2=choice(lista_cartas)
     score_jugador+=cartas[carta_jugador_2]
     score_banca, frase = main_banca()
+    print("Comprobemos si hay posibilidad de seguir")
     if score_banca>=17:
         print("Sus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score_jugador))
         print(frase)
@@ -62,8 +64,8 @@ def jugador_simple():
         else:
             carta_jugador_3=choice(lista_cartas)
             score_jugador+=cartas[carta_jugador_3]
-            print("Sus cartas era {} {} {} y sumaban {}".format(carta_jugador_1,carta_jugador_2,carta_jugador_3, score_jugador))
             score_banca, frase = main_banca()
+            print(["Sus cartas era {} {} {} y sumaban {}".format(carta_jugador_1,carta_jugador_2,carta_jugador_3, score_jugador)], frase)
             print(frase)
             if score_jugador > 21:
                 print("oh no!, parece que se ha pasado \nLa banca gana")
