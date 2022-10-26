@@ -44,6 +44,7 @@ def jugador_simple():
     score_jugador+=cartas[carta_jugador_2]
     score_banca, frase = main_banca()
     if score_banca>=17:
+        print("Sus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score_jugador))
         print(frase)
         if score_banca<score_jugador:
             print("El jugador gana")
