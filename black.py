@@ -82,7 +82,7 @@ def jugador_simple():
     score_banca, frase = main_banca()
     print("Comprobemos si hay posibilidad de seguir")
     if score_banca>=17:
-        print("Sus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score_jugador))
+        print("No hay posibilidad\nSus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score_jugador))
         print(frase)
         frase=victoria1()
     else:
