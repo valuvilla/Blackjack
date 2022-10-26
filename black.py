@@ -1,6 +1,7 @@
 from ast import main
 from random import choice, sample
-from traceback import FrameSummary
+
+SI=["si", "S", "s", "Si", "verdadero", "Verdadero", "True", "1"]
 
 def diccionario():
 
@@ -27,28 +28,29 @@ def diccionario():
 
 def main_banca():
     lista_cartas, cartas = diccionario()
-    cartas_banca = sample(lista_cartas, 2)
-    score_banca = sum(cartas[carta] for carta in cartas_banca)
-    frase="La banca tenía {} {} y sumaban {}".format(cartas_banca[0],
-                                                          cartas_banca[1],
-                                                          score_banca)
-    return score_banca, frase                                               
+    CARTAS_BANCA = sample(lista_cartas, 2)
+    SCORE_BANCA = sum(cartas[carta] for carta in CARTAS_BANCA)
+    frase="La banca tenía {} {} y sumaban {}".format(CARTAS_BANCA[0],
+                                                          CARTAS_BANCA[1],
+                                                          SCORE_BANCA) 
+                                                                                                            
+    return SCORE_BANCA, frase                                               
 
 
 def jugador():
     lista_cartas, cartas =diccionario()
-    carta_jugador_1=choice(lista_cartas)
-    score_jugador_1=cartas[carta_jugador_1]
-    carta_jugador_2=choice(lista_cartas)
-    score_jugador_2=cartas[carta_jugador_2]
-    carta1_valor1="Su primera carta es {} con un valor de {}".format(carta_jugador_1, score_jugador_1)
-    return score_jugador_1, score_jugador_2, carta_jugador_1, carta_jugador_2, carta1_valor1
+    CARTA_JUGADOR_1=choice(lista_cartas)
+    score_jugador_1=cartas[CARTA_JUGADOR_1]
+    CARTA_JUGADOR_2=choice(lista_cartas)
+    score_jugador_2=cartas[CARTA_JUGADOR_2]
+    carta1_valor1="Su primera carta es {} con un valor de {}".format(CARTA_JUGADOR_1, score_jugador_1)
+    return score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1
 
 def victoria1():
     score_banca, frase = main_banca()
-    score_jugador_1, score_jugador_2, carta_jugador_1, carta_jugador_2, carta1_valor1 = jugador()
-    print(score_jugador_1 + score_jugador_2)
-    print(score_banca)
+    score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1= jugador()
+    print("jugador{}".format(score_jugador_1 + score_jugador_2))
+    print("banca{}".format(score_banca))
     if score_banca < score_jugador_1+score_jugador_2:
             print("El jugador gana")
     if score_banca > score_jugador_1+score_jugador_2:
@@ -57,12 +59,12 @@ def victoria1():
 
 def tercera_carta():
     lista_cartas, cartas =diccionario()
-    score_jugador_1, score_jugador_2, carta_jugador_1, carta_jugador_2, carta1_valor1 = jugador()
+    score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1 = jugador()
     score=score_jugador_1+score_jugador_2
     carta_jugador_3=choice(lista_cartas)
     score_jugador_3=cartas[carta_jugador_3]
     score_jugador_total=score_jugador_3+score
-    print("Sus cartas era {} {} {} y sumaban {}".format(carta_jugador_1,carta_jugador_2,carta_jugador_3, score_jugador_total))
+    print("Sus cartas era {} {} {} y sumaban {}".format(CARTA_JUGADOR_1,CARTA_JUGADOR_2,carta_jugador_3, score_jugador_total))
     return  score_jugador_total
 
 
@@ -82,19 +84,19 @@ def Victoria2():
 
 
 def jugador_simple():
-    score_jugador_1, score_jugador_2, carta_jugador_1, carta_jugador_2, carta1_valor1 = jugador()
+    score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1 = jugador()
     score=score_jugador_1+score_jugador_2
     print(carta1_valor1)
     score_banca, frase = main_banca()
     print("Comprobemos si hay posibilidad de seguir")
     if score_banca>=17:
-        print("No hay posibilidad\nSus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score))
+        print("No hay posibilidad\nSus cartas eran {} {} y sumaban {}".format(CARTA_JUGADOR_1, CARTA_JUGADOR_2, score))
         print(frase)
         frase=victoria1()
     else:
         respuesta=input("Existe posibilidad de seguir\n¿Desea plantarse?\n")
         if respuesta in SI:
-            print("Sus cartas eran {} {} y sumaban {}".format(carta_jugador_1, carta_jugador_2, score))
+            print("Sus cartas eran {} {} y sumaban {}".format(CARTA_JUGADOR_1, CARTA_JUGADOR_2, score))
             print(frase)
             frase=victoria1()
         else:
@@ -105,9 +107,8 @@ def jugador_simple():
             else:
                 frase=Victoria2()
 
+jugador_simple()
 
-
-SI=["si", "S", "s", "Si", "verdadero", "Verdadero", "True", "1"]
 
 
 def partida():
@@ -123,7 +124,7 @@ def partida():
             print("FIN DE PARTIDA\n{} ha jugado {} veces".format(nombre,partidas))
             return"hasta luego, {}".format(nombre)
             break
-
+partida
 
 
 if __name__=="__main__":
