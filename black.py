@@ -48,9 +48,11 @@ def jugador():
 def victoria1():
     score_banca, frase = main_banca()
     score_jugador, carta_jugador_1, carta_jugador_2, carta1_valor1 = jugador()
-    if score_banca<score_jugador:
+    print(score_jugador)
+    print(score_banca)
+    if score_banca < score_jugador:
             print("El jugador gana")
-    else:
+    if score_banca > score_jugador:
             print("La banca gana")
     return frase
 
