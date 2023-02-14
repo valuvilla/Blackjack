@@ -1,8 +1,12 @@
 from ast import main
-from random import choice, sample
+from random import choice, sample, shuffle
+import random
 
+
+#definimos las posibles respuestas
 SI=["si", "S", "s", "Si", "verdadero", "Verdadero", "True", "1"]
 
+#Establecemos el valor y dubujo de cada carta
 def diccionario():
 
     cartas= {
@@ -25,7 +29,7 @@ def diccionario():
     return lista_cartas, cartas
 
 
-
+#Definimos la accion de la banca
 def main_banca():
     lista_cartas, cartas = diccionario()
     CARTAS_BANCA = sample(lista_cartas, 2)
@@ -36,27 +40,31 @@ def main_banca():
                                                                                                             
     return SCORE_BANCA, frase                                               
 
-
+#Definimos la accion del jugador
 def jugador():
     lista_cartas, cartas =diccionario()
     CARTA_JUGADOR_1=choice(lista_cartas)
     score_jugador_1=cartas[CARTA_JUGADOR_1]
     CARTA_JUGADOR_2=choice(lista_cartas)
     score_jugador_2=cartas[CARTA_JUGADOR_2]
+    score=score_jugador_1+score_jugador_2
     carta1_valor1="Su primera carta es {} con un valor de {}".format(CARTA_JUGADOR_1, score_jugador_1)
-    return score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1
+    return score, score_jugador_1,score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1
 
+"""
+#En caso de plantarse, como se gana
 def victoria1():
-    score_banca, frase = main_banca()
+    SCORE_BANCA, frase = main_banca()
     score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1= jugador()
     print("jugador{}".format(score_jugador_1 + score_jugador_2))
-    print("banca{}".format(score_banca))
-    if score_banca < score_jugador_1+score_jugador_2:
+    print("banca{}".format(SCORE_BANCA))
+    if SCORE_BANCA < score_jugador_1+score_jugador_2:
             print("El jugador gana")
-    if score_banca > score_jugador_1+score_jugador_2:
+    if SCORE_BANCA > score_jugador_1+score_jugador_2:
             print("La banca gana")
     return frase
 
+#En caso de seguir, definir la siguiente carta
 def tercera_carta():
     lista_cartas, cartas =diccionario()
     score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1 = jugador()
@@ -67,65 +75,85 @@ def tercera_carta():
     print("Sus cartas era {} {} {} y sumaban {}".format(CARTA_JUGADOR_1,CARTA_JUGADOR_2,carta_jugador_3, score_jugador_total))
     return  score_jugador_total
 
+#Como ganar tras seguir
 
 def Victoria2():
-    score_banca, frase = main_banca()
+    SCORE_BANCA,frase = main_banca()
     score_jugador_total= tercera_carta()
     print(score_jugador_total)
-    if score_banca<score_jugador_total:
+    if SCORE_BANCA<score_jugador_total:
             print("El jugador gana")
     else:
             print("La banca gana")
     return frase
-    
+  """  
 
 
 
-
-
+#Definir una partida
 def jugador_simple():
-    score_jugador_1, score_jugador_2, CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1 = jugador()
-    score=score_jugador_1+score_jugador_2
+    lista_cartas, cartas =diccionario()
+    score, score_jugador_1,score_jugador_2,CARTA_JUGADOR_1, CARTA_JUGADOR_2, carta1_valor1 = jugador()
     print(carta1_valor1)
-    score_banca, frase = main_banca()
+    SCORE_BANCA, frase = main_banca()
     print("Comprobemos si hay posibilidad de seguir")
-    if score_banca>=17:
+    def victoria1():
+            if score > 21:
+                print("oh no!, parece que se ha pasado \nLa banca gana")
+            if SCORE_BANCA < score:
+                print("El jugador gana")
+            else:
+                print("La banca gana")
+    if SCORE_BANCA>=17:
         print("No hay posibilidad\nSus cartas eran {} {} y sumaban {}".format(CARTA_JUGADOR_1, CARTA_JUGADOR_2, score))
         print(frase)
-        frase=victoria1()
+        victoria1()
     else:
-        respuesta=input("Existe posibilidad de seguir\n¿Desea plantarse?\n")
-        if respuesta in SI:
-            print("Sus cartas eran {} {} y sumaban {}".format(CARTA_JUGADOR_1, CARTA_JUGADOR_2, score))
-            print(frase)
-            frase=victoria1()
-        else:
-            score_jugador_total = tercera_carta()
-            print(frase)
-            if score_jugador_total > 21:
-                print("oh no!, parece que se ha pasado \nLa banca gana")
+        def plantarse():
+            respuesta=input("Existe posibilidad de seguir\n¿Desea plantarse?\n")
+            if respuesta in SI:
+                print("Sus cartas eran {} {} y sumaban {}".format(CARTA_JUGADOR_1, CARTA_JUGADOR_2, score))
+                print(frase)
+                victoria1()
             else:
-                frase=Victoria2()
+                def tercera_carta():
+                    carta_jugador_3=choice(lista_cartas)
+                    score_jugador_3=cartas[carta_jugador_3]
+                    score=score_jugador_1+score_jugador_2+score_jugador_3
+                    return "Sus cartas era {} {} {} y sumaban {}".format(CARTA_JUGADOR_1,CARTA_JUGADOR_2,carta_jugador_3, score)
+                tercera_carta()
+                print(frase)
+                victoria1()
+        plantarse()
 
-jugador_simple()
 
 
+#definir el juego con varias partidas
+# Funcion que genera un mazo de cartas, que son numeros del 1 al 13, y las baraja.
+def generar_mazo() -> list:
+    mazo: list = list(range(1,14)) * 4
+    shuffle(mazo)
+    random.shuffle(mazo)
+    return mazo
 
-def partida():
-    nombre=input("Hola, dime tu nombre: ")
+# Funcion principal del juego. Pide el nombre del jugador, y pregunta si desea jugar.
+# Si el jugador responde que si, empieza el juego, y si responde que no, finaliza el juego.
+def partida() -> None:
+    nombre: str = input("Hola, dime tu nombre: ")
     print("Bienvinid@ al Blackjack, {}".format(nombre))
-    partidas=0
+    partidas: int = 0
     while True:
-        pregunta=input("¿Desea jugar?\n")
+        pregunta: str = input("¿Desea jugar?\n")
         if pregunta in SI:
-            partidas+=1
+            partidas += 1
             jugador_simple()
         else:
             print("FIN DE PARTIDA\n{} ha jugado {} veces".format(nombre,partidas))
-            return"hasta luego, {}".format(nombre)
+            print("hasta luego, {}".format(nombre))
             break
-partida
 
+
+partida()
 
 if __name__=="__main__":
     main()

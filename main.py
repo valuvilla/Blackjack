@@ -1,4 +1,11 @@
 import black
 
-if __name__=="__main__":
-   black.partida()
+def main() -> None:
+    black.partida()
+
+if __name__ == "__main__":
+    main()
+   
+# Creamos if __name__ == "__main__" para que el programa no se ejecute si se importa como módulo.
+
+
